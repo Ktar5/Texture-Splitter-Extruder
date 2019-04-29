@@ -25,7 +25,7 @@ public class CreateWholeTileset {
 
         // Create the custom dialog.
         Dialog<CreateWholeTileset> dialog = new Dialog<>();
-        dialog.setTitle("Create New BaseTilemap");
+        dialog.setTitle("Extrude Edges");
 
         // Set the button types.
         ButtonType loginButtonType = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);

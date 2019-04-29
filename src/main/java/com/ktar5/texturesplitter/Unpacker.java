@@ -1,6 +1,7 @@
 package com.ktar5.texturesplitter;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -50,7 +51,12 @@ public class Unpacker {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.exit(0);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Extrusion Complete");
+        alert.setHeaderText(null);
+        alert.setContentText("The extrusion process is complete!");
+        alert.showAndWait();
     }
 
     public void getTilesetImages(BufferedImage image) throws IOException {
@@ -76,7 +82,7 @@ public class Unpacker {
             }
         }
 
-        BufferedImage result = new BufferedImage(dimensionX, dimensionY, BufferedImage.TYPE_INT_RGB);
+        BufferedImage result = new BufferedImage(dimensionX, dimensionY, BufferedImage.TYPE_INT_ARGB);
         Graphics g = result.getGraphics();
 
         int x = 0, y = 0;
@@ -121,7 +127,6 @@ public class Unpacker {
         for (int x = 0; x < input.getWidth(); x++) {
             color = pixelReader.getColor(x, 0);
             pixelWriter.setColor(x + 1, 0, color);
-
             color = pixelReader.getColor(x, input.getHeight() - 1);
             pixelWriter.setColor(x + 1, height - 1, color);
         }
@@ -134,10 +139,17 @@ public class Unpacker {
             pixelWriter.setColor(width - 1, y + 1, color);
         }
 
+//        for (int y = 0; y < input.getHeight(); y++) {
+//            for (int x = 0; x < input.getWidth(); x++) {
+//                color = pixelReader.getColor(x, y);
+//                pixelWriter.setColor(x + 1, y + 1, color);
+//            }
+//        }
+
         for (int y = 0; y < input.getHeight(); y++) {
             for (int x = 0; x < input.getWidth(); x++) {
-                color = pixelReader.getColor(x, y);
-                pixelWriter.setColor(x + 1, y + 1, color);
+                int argb = pixelReader.getArgb(x, y);
+                pixelWriter.setArgb(x + 1, y + 1, argb);
             }
         }
 
